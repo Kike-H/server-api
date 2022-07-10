@@ -1,3 +1,4 @@
+require('colors');
 const http = require('http');
 
 const { TaskManager } = require('./modules/task')
@@ -41,5 +42,5 @@ http.createServer((req, res) => {
     }
         
 }).listen(port, host, () => {
-    console.log(`Sercer is running on http://${host}:${port}`);
+    console.log(`\nServer is running on http://${host}:${port}`.green);
 });
