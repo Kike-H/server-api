@@ -20,7 +20,6 @@ http.createServer((req, res) => {
     }
     //Task rotes 
     else if (points[1] == 'tasks') {
-        console.log(points)
         if(req.method == 'GET') {
             res.setHeader('Content-Type','application/json');
             res.writeHead(200);

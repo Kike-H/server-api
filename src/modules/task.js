@@ -3,26 +3,25 @@ const path = require('path');
 
 class TaskManager {
     constructor() {
-        this.database_path = path.join(__dirname, '../../database.json')
+        this.db_path = path.join(__dirname, '../../db.json');
+        this.tasks = JSON.parse(fs.readFileSync(this.db_path, 'utf-8'));
     }
 
     get() {
-        return JSON.parse(fs.readFileSync(this.database_path, 'utf-8'));
+        return this.tasks;
     }
 
     post(new_task) {
-        let data = JSON.parse(fs.readFileSync(this.database_path, 'utf-8'));
-        new_task.id = data.length > 0 ? data[data.length - 1].id+1 : 1;
-        data.push(new_task);
-        fs.writeFileSync(this.database_path, JSON.stringify(data));
+        new_task.id = this.tasks.length > 0 ? this.tasks[this.tasks.length - 1].id+1 : 1;
+        this.tasks.push(new_task);
+        fs.writeFileSync(this.db_path, JSON.stringify(this.tasks));
         return new_task.id;
     }
 
     delete(id) {
-        let data = JSON.parse(fs.readFileSync(this.database_path, 'utf-8'));
-        data = data.filter((value) => id != value.id)
-        fs.writeFileSync(this.database_path, JSON.stringify(data))
-        return data;
+        this.tasks = this.tasks.filter((value) => id != value.id)
+        fs.writeFileSync(this.db_path, JSON.stringify(this.tasks));
+        return this.tasks;
     }
 
 } 
